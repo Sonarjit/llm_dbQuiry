@@ -15,3 +15,4 @@ langsmith
 langchain-core 
 langchain 
 langchain-google-genai
+python-dotenv
