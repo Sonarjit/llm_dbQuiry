@@ -18,3 +18,5 @@ langchain-google-genai
 python-dotenv
 pymysql
 langchain-community
+
+langchain-ollama
