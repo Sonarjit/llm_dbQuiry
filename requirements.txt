@@ -19,4 +19,4 @@ python-dotenv
 pymysql
 langchain-community
 
-langchain-ollama
+langchain-groq
