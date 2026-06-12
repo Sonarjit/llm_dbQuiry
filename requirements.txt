@@ -10,13 +10,16 @@ pymysql
 sentence-transformers
 chromadb
 
-
+#######################################
 langsmith 
 langchain-core 
 langchain 
-langchain-google-genai
+# langchain-google-genai
 python-dotenv
 pymysql
 langchain-community
 
 langchain-groq
+langchain-huggingface
+sentence-transformers
+langchain-chroma
