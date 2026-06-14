@@ -1,75 +1,59 @@
+# 👕 Sonar Inventory: AI Data Analyst 
 
-# AtliQ Tees: Talk to a Database  
+An advanced **Hybrid Text-to-SQL Agent** that allows users to query a MySQL inventory database using natural language. 
 
-This is an end to end LLM project based on Google Palm and Langchain. We are building a system that can talk to MySQL database. 
-User asks questions in a natural language and the system generates answers by converting those questions to an SQL query and
-then executing that query on MySQL database. 
-AtliQ Tees is a T-shirt store where they maintain their inventory, sales and discounts data in MySQL database. A store manager 
-will may ask questions such as,
-- How many white color Adidas t shirts do we have left in the stock?
-- How much sales our store will generate if we can sell all extra-small size t shirts after applying discounts?
-The system is intelligent enough to generate accurate queries for given question and execute them on MySQL database
+Unlike standard single-shot text-to-SQL scripts, this project utilizes an **Exemplar RAG (Retrieval-Augmented Generation) layer** combined with a **Stateful LangGraph ReAct Agent** to guarantee high-accuracy, syntax-perfect database queries.
 
-![](atliq_tees.png)
+## Key Features
 
-## Project Highlights
+* **Dynamic Few-Shot RAG:** Uses Hugging Face local embeddings and a Chroma vector database to semantically match the user's question with the most relevant SQL examples before execution.
+* **Self-Correcting Agentic Loop:** Powered by LangGraph and Groq (Llama-3.3-70b), the agent natively interacts with database tools to explore schemas and autonomously fix SQL syntax errors if a query fails.
+* **Secure Read-Only Execution:** Enforces strict dialect guardrails and executes entirely through a read-only database user profile to prevent data mutation.
+* **Interactive Chat UI:** Built with Streamlit, featuring real-time reasoning spinners, chat history, and architectural transparency.
 
-- AtliQ Tees is a t shirt store that sells Adidas, Nike, Van Heusen and Levi's t shirts 
-- Their inventory, sales and discounts data is stored in a MySQL database
-- We will build an LLM based question and answer system that will use following,
-  - Google Palm LLM
-  - Hugging face embeddings
-  - Streamlit for UI
-  - Langchain framework
-  - Chromadb as a vector store
-  - Few shot learning
-- In the UI, store manager will ask questions in a natural language and it will produce the answers
+---
 
+## System Architecture
 
-## Installation
+This application merges two distinct AI design patterns:
 
-1.Clone this repository to your local machine using:
+1. **The RAG Layer (Prompt Optimization):**
+   * The user submits a natural language question.
+   * The input is embedded locally using `sentence-transformers/all-MiniLM-L6-v2`.
+   * A similarity search runs against an in-memory **Chroma DB** to retrieve the top 2 structurally similar SQL examples.
+   * These examples are dynamically injected into a LangChain `FewShotPromptTemplate`.
 
-```bash
-  git clone https://github.com/codebasics/langchain.git
-```
-2.Navigate to the project directory:
+2. **The Agent Layer (Execution):**
+   * The optimized prompt is passed to a **LangGraph ReAct Agent**.
+   * The agent utilizes the `SQLDatabaseToolkit` to query the live MySQL database.
+   * The agent analyzes the returned data, formats a human-readable answer, and sends it to the Streamlit UI.
 
-```bash
-  cd 4_sqldb_tshirts
-```
-3. Install the required dependencies using pip:
+---
 
-```bash
-  pip install -r requirements.txt
-```
-4.Acquire an api key through makersuite.google.com and put it in .env file
+## 🛠️ Tech Stack
 
-```bash
-  GOOGLE_API_KEY="your_api_key_here"
-```
-5. For database setup, run database/db_creation_atliq_t_shirts.sql in your MySQL workbench
+* **Large Language Model:** Llama 3.3 70B (via Groq API)
+* **Framework:** LangChain & LangGraph
+* **Vector Database:** Chroma (Local)
+* **Embeddings:** Hugging Face (`all-MiniLM-L6-v2`)
+* **Relational Database:** MySQL (PyMySQL)
+* **Frontend UI:** Streamlit
 
-## Usage
+---
 
-1. Run the Streamlit app by executing:
-```bash
-streamlit run main.py
+## 📁 Project Structure
 
-```
-
-2.The web app will open in your browser where you can ask questions
-
-## Sample Questions
-  - How many total t shirts are left in total in stock?
-  - How many t-shirts do we have left for Nike in XS size and white color?
-  - How much is the total price of the inventory for all S-size t-shirts?
-  - How much sales amount will be generated if we sell all small size adidas shirts today after discounts?
-  
-## Project Structure
-
-- main.py: The main Streamlit application script.
-- langchain_helper.py: This has all the langchain code
-- requirements.txt: A list of required Python packages for the project.
-- few_shots.py: Contains few shot prompts
-- .env: Configuration file for storing your Google API key.
+```text
+atliq-ai-analyst/
+│
+├── .env                    # Environment variables (not tracked by git)
+├── requirements.txt        # Python dependencies
+├── app.py                  # Streamlit frontend entry point
+│
+└── src/
+    ├── __init__.py
+    ├── config.py           # Centralized environment configurations
+    ├── database.py         # Secure MySQL connection logic
+    ├── few_shots.py        # Library of highly curated Text-to-SQL examples
+    ├── prompts.py          # Vector store initialization and dynamic prompt templating
+    └── agent.py            # LangGraph agent setup and tool binding

@@ -1,19 +1,32 @@
-import streamlit as st
-from langchain_helper import get_few_shot_db_chain
+from src.prompts import build_dynamic_prompt
+from src.agent import create_sql_reasoning_agent
 
-st.title("AtliQ T Shirts: Database Q&A 👕")
+def main():
+    # 1. Initialize core components
+    print("Initializing Agent and Vector Store...")
+    agent_executor = create_sql_reasoning_agent()
+    dynamic_prompt_template = build_dynamic_prompt()
 
-question = st.text_input("Question: ")
+    # 2. Capture user input
+    user_question = "What is the total revenue we would generate if we sold all remaining extra large black Levi shirts at their final discounted price?"
 
-if question:
-    chain = get_few_shot_db_chain()
-    response = chain.run(question)
+    # 3. Format the prompt dynamically (Triggers Vector Search)
+    system_instructions = dynamic_prompt_template.format(Question=user_question)
 
-    st.header("Answer")
-    st.write(response)
+    # 4. Execute the agent
+    print(f"\nUser: {user_question}")
+    print("Agent is reasoning...\n")
+    
+    response = agent_executor.invoke({
+        "messages": [
+            ("system", system_instructions),
+            ("user", user_question)
+        ]
+    })  
 
+    # 5. Output the final result
+    print("Final Answer:")
+    print(response["messages"][-1].content)
 
-
-
-
-
+if __name__ == "__main__":
+    main()
