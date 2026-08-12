@@ -1,4 +1,4 @@
-# 👕 Sonar Inventory: AI Data Analyst 
+# Sonar Store: AI Data Analyst 
 
 An advanced **Hybrid Text-to-SQL Agent** that allows users to query a MySQL inventory database using natural language. 
 
@@ -30,7 +30,7 @@ This application merges two distinct AI design patterns:
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **Large Language Model:** Llama 3.3 70B (via Groq API)
 * **Framework:** LangChain & LangGraph
@@ -39,21 +39,51 @@ This application merges two distinct AI design patterns:
 * **Relational Database:** MySQL (PyMySQL)
 * **Frontend UI:** Streamlit
 
----
+## OS Requirement
 
-## 📁 Project Structure
+Microsoft Windows 10 or 11
 
-```text
-atliq-ai-analyst/
-│
-├── .env                    # Environment variables (not tracked by git)
-├── requirements.txt        # Python dependencies
-├── app.py                  # Streamlit frontend entry point
-│
-└── src/
-    ├── __init__.py
-    ├── config.py           # Centralized environment configurations
-    ├── database.py         # Secure MySQL connection logic
-    ├── few_shots.py        # Library of highly curated Text-to-SQL examples
-    ├── prompts.py          # Vector store initialization and dynamic prompt templating
-    └── agent.py            # LangGraph agent setup and tool binding
+## Set up and Run
+
+1. Download and install python:Python 3.12.3
+
+2. Clone repository
+```bash
+git clone https://github.com/Sonarjit/llm_dbQuiry.git
+```
+
+3. Create a Virtual Environment (Python 3.12.3) and activate the environment
+```bash
+python -m venv vEnv
+```
+
+```bash
+.\vEnv\Scripts\activate
+```
+
+4. Install the requiremtns
+```bash
+pip install -r requirements.txt
+```
+
+5. Set up database
+Follow the steps provided in [SQL connection set up.md](SQL%20connection%20set%20up.md).
+
+6. Setup .env
+Create a file named as .env in the parent folder. Inside that file, fill these
+
+GROQ_API_KEY = "your-api-key-here"(visit this to get api key https://console.groq.com/home)
+
+DB_USER = "sa"
+
+DB_PASSWORD = "your-db-password-here"
+
+DB_NAME = "sonar_store"
+
+DB_SERVER = ".\SQLEXPRESS"
+
+
+7. Run
+```bash
+streamlit run app.py
+```

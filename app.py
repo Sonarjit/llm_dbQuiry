@@ -33,7 +33,7 @@ with st.sidebar:
 # ==========================================
 # 2. INITIALIZE AI STATE
 # ==========================================
-st.title("👕 AtliQ Inventory: AI Data Analyst")
+st.title("👕 Sonar Store: AI Data Analyst")
 st.write("Ask natural language questions to query the MySQL database.")
 
 # Cache the agent and prompt so they don't rebuild on every click

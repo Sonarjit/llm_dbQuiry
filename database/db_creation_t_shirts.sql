@@ -1,6 +1,6 @@
 -- Create the database
-CREATE DATABASE atliq_tshirts;
-USE atliq_tshirts;
+CREATE DATABASE sonar_store;
+USE sonar_store;
 
 -- Create the t_shirts table
 CREATE TABLE t_shirts (

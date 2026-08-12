@@ -1,0 +1,15 @@
+Project Structure
+
+store-ai-analyst/
+│
+├── .env                    # Environment variables (not tracked by git)
+├── requirements.txt        # Python dependencies
+├── app.py                  # Streamlit frontend entry point
+│
+└── src/
+    ├── __init__.py
+    ├── config.py           # Centralized environment configurations
+    ├── microsoft_sql_connection.py         # Secure MySQL connection logic
+    ├── few_shots.py        # Library of highly curated Text-to-SQL examples
+    ├── prompts.py          # Vector store initialization and dynamic prompt templating
+    └── agent.py            # LangGraph agent setup and tool binding

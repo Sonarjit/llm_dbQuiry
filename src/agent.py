@@ -2,7 +2,8 @@ from langchain_groq import ChatGroq
 from langchain_community.agent_toolkits.sql.toolkit import SQLDatabaseToolkit
 from langgraph.prebuilt import create_react_agent
 from src.config import GROQ_API_KEY
-from src.database import get_db_connection
+# from src.database import get_db_connection
+from src.microsoft_sql_connection import get_db_connection
 
 def create_sql_reasoning_agent():
     """Initializes the Groq LLM, database tools, and execution graph."""
